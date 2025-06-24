@@ -102,22 +102,25 @@ def main():
                     st.caption(f"🕒 {response_time}")
                     st.session_state.messages.append({"role": "assistant", "content": response_text})
 
-        # Tombol hapus riwayat di bawah chat
+        # Divider & layout 2 kolom untuk tombol & upload pdf
         st.divider()
-        if st.button("🗑️ Hapus Riwayat Chat"):
-            st.session_state.messages = []
-            st.success("Riwayat chat berhasil dihapus.")
+        col1, col2 = st.columns(2)
 
-        # Upload PDF di paling bawah
-        st.divider()
-        with st.expander("📄 Upload PDF untuk ditanya", expanded=False):
-            uploaded_pdf = st.file_uploader("Pilih PDF", type=["pdf"])
+        with col1:
+            if st.button("🗑️ Hapus Riwayat Chat"):
+                st.session_state.messages = []
+                st.success("Riwayat chat berhasil dihapus.")
+
+        with col2:
+            uploaded_pdf = st.file_uploader("📄 Upload PDF", type=["pdf"], label_visibility="collapsed")
+            st.caption("📄 Upload PDF")
 
         if uploaded_pdf is not None:
             pdf_text = extract_text_from_pdf(uploaded_pdf)
             if pdf_text:
                 st.info("Teks dari PDF berhasil diambil. Kamu bisa tanya isi PDF di bawah ini.")
-                if pdf_question := st.text_input("Tanya sesuatu tentang PDF..."):
+                pdf_question = st.text_input("Tanya sesuatu tentang PDF...")
+                if pdf_question:
                     with st.spinner("Sedang memproses jawaban..."):
                         combined_input = f"Tolong jawab berdasarkan isi PDF ini:\n\n{pdf_text}\n\nPertanyaan saya:\n{pdf_question}"
                         response_text = run_agent(combined_input)
