@@ -4,6 +4,7 @@ import streamlit as st
 import datetime
 from langchain_google_genai import ChatGoogleGenerativeAI
 from callback_handler import GeminiCallbackHandler
+import PyPDF2
 
 # Load API Key
 load_dotenv()
@@ -28,6 +29,17 @@ def run_agent(user_input: str) -> str:
         return str(response.content)
     except Exception as e:
         return f"Terjadi kesalahan: {str(e)}"
+
+# Ekstrak Teks PDF
+def extract_text_from_pdf(uploaded_file) -> str:
+    text = ""
+    try:
+        reader = PyPDF2.PdfReader(uploaded_file)
+        for page in reader.pages:
+            text += page.extract_text() or ""
+        return text.strip()
+    except Exception as e:
+        return f"Terjadi kesalahan saat membaca PDF: {str(e)}"
 
 # Main Streamlit
 def main():
@@ -61,6 +73,14 @@ def main():
         </div>
         """, unsafe_allow_html=True)
 
+        col1, col2 = st.columns(2)
+        with col1:
+            uploaded_pdf = st.file_uploader("📄 Upload PDF untuk ditanya", type=["pdf"])
+        with col2:
+            if st.button("🗑️ Hapus Riwayat Chat"):
+                st.session_state.messages = []
+                st.success("Riwayat chat berhasil dihapus.")
+
         if "messages" not in st.session_state:
             st.session_state.messages = [{
                 "role": "assistant",
@@ -71,6 +91,18 @@ def main():
             avatar = "🧑‍💻" if message["role"] == "user" else "💖"
             with st.chat_message(message["role"], avatar=avatar):
                 st.markdown(message["content"])
+
+        if uploaded_pdf is not None:
+            pdf_text = extract_text_from_pdf(uploaded_pdf)
+            if pdf_text:
+                st.info("Teks dari PDF berhasil diekstrak. Kamu bisa tanya isi PDF di bawah ini.")
+                if pdf_question := st.text_input("Tanya sesuatu terkait PDF..."):
+                    with st.spinner("Sedang memproses pertanyaan dari PDF..."):
+                        combined_input = f"Tolong jawab berdasarkan isi PDF ini:\n\n{pdf_text}\n\nPertanyaan saya:\n{pdf_question}"
+                        response_text = run_agent(combined_input)
+                        st.session_state.messages.append({"role": "user", "content": pdf_question})
+                        st.session_state.messages.append({"role": "assistant", "content": response_text})
+                        st.rerun()
 
         if user_input := st.chat_input("Tulis sesuatu..."):
             timestamp = datetime.datetime.now().strftime("%H:%M:%S")
