@@ -1,0 +1,37 @@
+body, .stApp {
+    background-color: #d6eaff;
+    color: #ab0000;
+}
+
+.chat-title {
+    text-align: center;
+    color: #9e0000;
+    font-size: 2.5rem;
+    margin-top: 1rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: #d72822;
+    margin-bottom: 2rem;
+}
+
+.chat-bubble {
+    border-radius: 15px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    width: fit-content;
+    max-width: 80%;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+.chat-bubble.user {
+    background-color: #4a90e2;
+    color: white;
+    margin-left: auto;
+}
+
+.chat-bubble.bot {
+    background-color: #7cf2e0;
+    color: black;
+}
