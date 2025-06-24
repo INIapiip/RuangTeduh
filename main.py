@@ -2,24 +2,19 @@ import os
 from dotenv import load_dotenv
 import streamlit as st
 import datetime
-from langchain.memory import ConversationBufferMemory
 from langchain_google_genai import ChatGoogleGenerativeAI
 from callback_handler import GeminiCallbackHandler
-from googlesearch import search
-from tools.date_tools import show_current_date
-from tools.cooping_tools import get_coping_tips
-from tools.pscyologist_tools import get_professional_help
-from tools.translate_tools import TranslationService
-from streamlit.runtime.scriptrunner import RerunException
-from streamlit.runtime.scriptrunner import get_script_run_ctx
 
+# Load API Key
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY")
 
+# CSS Loader
 def load_css():
     with open("style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# Chat ke LLM
 def run_agent(user_input: str) -> str:
     try:
         llm = ChatGoogleGenerativeAI(
@@ -29,33 +24,32 @@ def run_agent(user_input: str) -> str:
             callbacks=[GeminiCallbackHandler()],
             convert_system_message_to_human=True
         )
-
         response = llm.invoke(user_input)
         return str(response.content)
     except Exception as e:
         return f"Terjadi kesalahan: {str(e)}"
 
+# Main Streamlit
 def main():
-    st.set_page_config(page_title="Chatbot AI Kesehatan Mental", page_icon="🧠", layout="centered")
+    st.set_page_config(page_title="Chatbot AI Kesehatan Mental", page_icon="💖", layout="centered")
     load_css()
 
     if "user_name" not in st.session_state or "user_city" not in st.session_state:
         st.markdown("""
         <div class='header'>
             <h1>💖 Selamat Datang di Chatbot Kesehatan Mental</h1>
-            <p>Sebelum kita ngobrol, kenalan dulu yuk~</p>
+            <p>Sebelum ngobrol, kenalan dulu yuk~</p>
         </div>
         """, unsafe_allow_html=True)
 
-        st.write("Isi data berikut:")
-        name = st.text_input("Nama Kamu:")
-        city = st.text_input("Asal Kota:")
+        name = st.text_input("Nama Kamu 💫")
+        city = st.text_input("Asal Kota 🏡")
 
-        if st.button("Mulai Chat", type="primary"):
+        if st.button("Mulai Chat 💖"):
             if name.strip() and city.strip():
                 st.session_state.user_name = name.strip()
                 st.session_state.user_city = city.strip()
-                raise RerunException(get_script_run_ctx())
+                st.rerun()
             else:
                 st.warning("Nama dan Kota wajib diisi dulu ya!")
 
@@ -74,7 +68,7 @@ def main():
             }]
 
         for message in st.session_state.messages:
-            avatar = "🧑‍💻" if message["role"] == "user" else "🧠"
+            avatar = "🧑‍💻" if message["role"] == "user" else "💖"
             with st.chat_message(message["role"], avatar=avatar):
                 st.markdown(message["content"])
 
@@ -86,7 +80,7 @@ def main():
                 st.markdown(user_input)
                 st.caption(f"🕒 {timestamp}")
 
-            with st.chat_message("assistant", avatar="🧠"):
+            with st.chat_message("assistant", avatar="💖"):
                 with st.spinner("Sedang memikirkan jawaban terbaik..."):
                     response_text = run_agent(user_input)
                     response_time = datetime.datetime.now().strftime("%H:%M:%S")
