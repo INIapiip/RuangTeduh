@@ -30,7 +30,7 @@ def run_agent(user_input: str) -> str:
     except Exception as e:
         return f"Terjadi kesalahan: {str(e)}"
 
-# Ekstrak Teks PDF
+# Ekstrak teks PDF
 def extract_text_from_pdf(uploaded_file) -> str:
     text = ""
     try:
@@ -41,7 +41,7 @@ def extract_text_from_pdf(uploaded_file) -> str:
     except Exception as e:
         return f"Terjadi kesalahan saat membaca PDF: {str(e)}"
 
-# Main Streamlit
+# Main App
 def main():
     st.set_page_config(page_title="CeritaTeduh", page_icon="💖", layout="centered")
     load_css()
@@ -49,8 +49,8 @@ def main():
     if "user_name" not in st.session_state or "user_city" not in st.session_state:
         st.markdown("""
         <div class='header'>
-            <h1>💖 Selamat Datang di Chatbot Kesehatan Mental</h1>
-            <p>Sebelum ngobrol, kenalan dulu yuk~</p>
+            <h1>💖 Selamat Datang di CeritaTeduh</h1>
+            <p>Yuk kenalan dulu sebelum ngobrol~</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -73,13 +73,8 @@ def main():
         </div>
         """, unsafe_allow_html=True)
 
-        col1, col2 = st.columns(2)
-        with col1:
-            uploaded_pdf = st.file_uploader("📄 Upload PDF untuk ditanya", type=["pdf"])
-        with col2:
-            if st.button("🗑️ Hapus Riwayat Chat"):
-                st.session_state.messages = []
-                st.success("Riwayat chat berhasil dihapus.")
+        with st.expander("📄 Upload PDF untuk ditanya", expanded=False):
+            uploaded_pdf = st.file_uploader("Pilih PDF", type=["pdf"])
 
         if "messages" not in st.session_state:
             st.session_state.messages = [{
@@ -95,9 +90,9 @@ def main():
         if uploaded_pdf is not None:
             pdf_text = extract_text_from_pdf(uploaded_pdf)
             if pdf_text:
-                st.info("Teks dari PDF berhasil diekstrak. Kamu bisa tanya isi PDF di bawah ini.")
-                if pdf_question := st.text_input("Tanya sesuatu terkait PDF..."):
-                    with st.spinner("Sedang memproses pertanyaan dari PDF..."):
+                st.info("Teks dari PDF berhasil diambil. Kamu bisa tanya isi PDF di bawah ini.")
+                if pdf_question := st.text_input("Tanya sesuatu tentang PDF..."):
+                    with st.spinner("Sedang memproses jawaban..."):
                         combined_input = f"Tolong jawab berdasarkan isi PDF ini:\n\n{pdf_text}\n\nPertanyaan saya:\n{pdf_question}"
                         response_text = run_agent(combined_input)
                         st.session_state.messages.append({"role": "user", "content": pdf_question})
@@ -119,6 +114,11 @@ def main():
                     st.markdown(response_text)
                     st.caption(f"🕒 {response_time}")
                     st.session_state.messages.append({"role": "assistant", "content": response_text})
+
+        st.divider()
+        if st.button("🗑️ Hapus Riwayat Chat"):
+            st.session_state.messages = []
+            st.success("Riwayat chat berhasil dihapus.")
 
 if __name__ == "__main__":
     main()
