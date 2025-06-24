@@ -31,7 +31,7 @@ def run_agent(user_input: str) -> str:
 
 # Main Streamlit
 def main():
-    st.set_page_config(page_title="Chatbot AI Kesehatan Mental", page_icon="💖", layout="centered")
+    st.set_page_config(page_title="CeritaTeduh", page_icon="💖", layout="centered")
     load_css()
 
     if "user_name" not in st.session_state or "user_city" not in st.session_state:
