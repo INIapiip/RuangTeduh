@@ -69,13 +69,13 @@ p {
 
 /* Bubble AI Biasa */
 .stChatMessage[data-testid="assistant"] {
-    background-color: #fff0f8 !important;
+    background-color: #bb377d !important; /* Pink soft yang lebih kalem */
     color: #333 !important;
 }
 
 /* Bubble AI Pertama (Sambutan) */
 .stChatMessage[data-testid="assistant"]:first-of-type {
-    background-color: #ffb3d9 !important;
+    background-color: #bb377d !important;
     color: #333 !important;
     border: 2px solid #ff66a3;
     animation: glowPulse 2s ease-in-out infinite;
