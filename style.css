@@ -141,6 +141,19 @@ html[data-theme="dark"] {
     --text-color: #333 !important;
     --background-color: #fff !important;
 }
+/** CSS untuk background drag & drop area agar lebih cantik pink soft **/
+.stFileUploader {
+    background: #ffe6f0 !important;
+    border-radius: 12px;
+    padding: 0.5rem;
+    border: 1px dashed #ff80bf !important;
+    color: #d63384;
+}
+
+/* Hover saat drag file */
+.stFileUploader:hover {
+    background: #ffd6eb !important;
+}
 
 /* Hilangkan Padding Streamlit */
 .main .block-container {
