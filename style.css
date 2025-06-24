@@ -1,15 +1,16 @@
-/* Atur background utama */
-html, body {
+/* Background Utama */
+html, body, .stApp {
     background: linear-gradient(135deg, #ffe0f0 0%, #ffaacc 100%) !important;
     color: #333 !important;
     font-family: 'Segoe UI', sans-serif;
+    background-attachment: fixed;
 }
 
-/* Header style */
+/* Header Cantik */
 .header {
     text-align: center;
     padding: 1.2rem;
-    color: #fff;
+    color: #fff !important;
     background: rgba(255, 105, 180, 0.85);
     border-radius: 15px;
     margin-bottom: 1rem;
@@ -24,10 +25,10 @@ h1 {
 
 p {
     font-size: 1.1rem;
-    color: #fff;
+    color: #fff !important;
 }
 
-/* Chat bubble style */
+/* Chat Bubble Style */
 .stChatMessage {
     border-radius: 20px;
     padding: 1rem;
@@ -35,31 +36,33 @@ p {
     background: rgba(255, 255, 255, 0.9) !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     color: #333 !important;
+    animation: fadeIn 0.5s ease;
 }
 
-/* User message bubble */
 .stChatMessage[data-testid="user"] {
     background-color: #ffd6e7 !important;
     text-align: right;
     color: #333 !important;
 }
 
-/* AI/Assistant message bubble */
 .stChatMessage[data-testid="assistant"] {
     background-color: #fff0f8 !important;
     color: #333 !important;
 }
 
-/* Chat input area */
-.stChatInput textarea, .stChatInput input {
+/* Chat Input Area */
+.stChatInput textarea, 
+.stChatInput input {
     background-color: #fff !important;
     color: #333 !important;
+    border-radius: 10px;
+    padding: 0.5rem;
 }
 
-/* Tombol kirim & lainnya */
+/* Tombol Kirim & Umum */
 .stButton>button {
-    background-color: #ff99c8;
-    color: #fff;
+    background-color: #ff99c8 !important;
+    color: #fff !important;
     border-radius: 20px;
     padding: 0.5rem 1.2rem;
     border: none;
@@ -69,11 +72,11 @@ p {
 }
 
 .stButton>button:hover {
-    background-color: #ff66a3;
+    background-color: #ff66a3 !important;
     transform: scale(1.05);
 }
 
-/* Animasi cute */
+/* Animasi */
 @keyframes float {
     0% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
@@ -84,4 +87,22 @@ p {
     0% { box-shadow: 0 0 5px #ff66a3; }
     50% { box-shadow: 0 0 15px #ff66a3; }
     100% { box-shadow: 0 0 5px #ff66a3; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Override Dark/Light Mode */
+html[data-theme="light"], 
+html[data-theme="dark"] {
+    --text-color: #333 !important;
+    --background-color: #fff !important;
+}
+
+/* Hilangkan Padding Default Streamlit */
+.main .block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
