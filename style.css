@@ -28,7 +28,7 @@ p {
     color: #fff !important;
 }
 
-/* Chat Bubble Style */
+/* Bubble Chat Umum */
 .stChatMessage {
     border-radius: 20px;
     padding: 1rem;
@@ -39,22 +39,30 @@ p {
     animation: fadeIn 0.5s ease;
 }
 
+/* Bubble Chat User (Setelah masuk chat) */
 .stChatMessage[data-testid="user"] {
-    background-color: #ffd6e7 !important;
+    background-color: #333 !important;
+    color: #fff !important;
     text-align: right;
-    color: #333 !important;
 }
 
+/* Bubble Chat AI/Asisten */
 .stChatMessage[data-testid="assistant"] {
     background-color: #fff0f8 !important;
     color: #333 !important;
 }
 
-/* Chat Input Area */
-.stChatInput textarea, 
-.stChatInput input {
+/* Form Input Nama & Kota */
+.stTextInput>div>input {
     background-color: #fff !important;
     color: #333 !important;
+}
+
+/* Chat Input Bawah (Setelah masuk) */
+.stChatInput textarea, 
+.stChatInput input {
+    background-color: #333 !important;
+    color: #fff !important;
     border-radius: 10px;
     padding: 0.5rem;
 }
@@ -94,14 +102,14 @@ p {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Override Dark/Light Mode */
+/* Override Mode Terang/Gelap Biar Aman */
 html[data-theme="light"], 
 html[data-theme="dark"] {
     --text-color: #333 !important;
     --background-color: #fff !important;
 }
 
-/* Hilangkan Padding Default Streamlit */
+/* Hilangkan Padding Default */
 .main .block-container {
     padding-top: 2rem;
     padding-bottom: 2rem;
