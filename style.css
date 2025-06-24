@@ -1,16 +1,16 @@
-body {
-    background: linear-gradient(135deg, #fbd3e9 0%, #bb377d 100%);
+/* Atur background utama */
+html, body {
+    background: linear-gradient(135deg, #ffe0f0 0%, #ffaacc 100%) !important;
+    color: #333 !important;
     font-family: 'Segoe UI', sans-serif;
-    color: #333;
-    animation: gradientMove 15s ease infinite;
-    background-size: 400% 400%;
 }
 
+/* Header style */
 .header {
     text-align: center;
     padding: 1.2rem;
     color: #fff;
-    background: rgba(255, 192, 203, 0.7);
+    background: rgba(255, 105, 180, 0.85);
     border-radius: 15px;
     margin-bottom: 1rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -24,29 +24,39 @@ h1 {
 
 p {
     font-size: 1.1rem;
+    color: #fff;
 }
 
+/* Chat bubble style */
 .stChatMessage {
     border-radius: 20px;
     padding: 1rem;
     margin: 0.5rem 0;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.9) !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    animation: fadeIn 1s ease;
-    color: #333;
+    color: #333 !important;
 }
 
+/* User message bubble */
 .stChatMessage[data-testid="user"] {
-    background-color: #ffe6f0;
+    background-color: #ffd6e7 !important;
     text-align: right;
-    color: #333;
+    color: #333 !important;
 }
 
+/* AI/Assistant message bubble */
 .stChatMessage[data-testid="assistant"] {
-    background-color: #fff0f5;
-    color: #333;
+    background-color: #fff0f8 !important;
+    color: #333 !important;
 }
 
+/* Chat input area */
+.stChatInput textarea, .stChatInput input {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+/* Tombol kirim & lainnya */
 .stButton>button {
     background-color: #ff99c8;
     color: #fff;
@@ -63,27 +73,7 @@ p {
     transform: scale(1.05);
 }
 
-.stChatInput textarea {
-    background-color: #fff;
-    color: #333;
-}
-
-.stChatInput input {
-    background-color: #fff;
-    color: #333;
-}
-
-footer, .stTextInput>div>input {
-    color: #333;
-}
-
-/* Animasi Gerak & Glow */
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
+/* Animasi cute */
 @keyframes float {
     0% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
@@ -94,9 +84,4 @@ footer, .stTextInput>div>input {
     0% { box-shadow: 0 0 5px #ff66a3; }
     50% { box-shadow: 0 0 15px #ff66a3; }
     100% { box-shadow: 0 0 5px #ff66a3; }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
